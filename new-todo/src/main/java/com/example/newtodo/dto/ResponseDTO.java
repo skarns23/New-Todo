@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -15,6 +16,6 @@ import java.util.ArrayList;
 @Data
 public class ResponseDTO<T> {
     private String error;
-    private ArrayList<T> data;
+    private List<T> data;
 
 }

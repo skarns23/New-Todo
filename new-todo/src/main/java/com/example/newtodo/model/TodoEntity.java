@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,7 +19,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Todo")
 public class TodoEntity {
-    @Id
+    @Id // Primary Key
+    @GeneratedValue(generator = "system-uuid") // id를 자동으로 생성함
+    @GenericGenerator(name = "system-uuid",strategy ="uuid") // Hibernate가 제공하는 기본 Generator가 아닌 나만의 것을 사용할 때 이용
     private String id; // 해당 Todo 오브젝트의 아이디
     private String userId; // 해당 오브젝트를 생성한 유저의 아이디
     private String title; // Todo 오브젝트의 제목 ( ex : 산책 )

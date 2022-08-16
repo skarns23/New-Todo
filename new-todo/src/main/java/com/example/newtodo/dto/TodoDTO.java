@@ -22,5 +22,13 @@ public class TodoDTO {
         this.success = entity.getSuccess();
     }
 
+    public static TodoEntity toEntity(final TodoDTO todoDTO){
+        TodoEntity todoEntity = TodoEntity.builder()
+                .title(todoDTO.getTitle())
+                .id(todoDTO.getId())
+                .success(todoDTO.getSuccess()).build();
+        return todoEntity;
+    }
+
 
 }
