@@ -14,19 +14,21 @@ import lombok.NoArgsConstructor;
 public class TodoDTO {
     private String id; // 오브젝트 id
     private String title; // 오브젝트의 타이틀
-    private Boolean success; // 성공여부
+
+    @Builder.Default
+    private Boolean done = false; // 성공여부
 
     public TodoDTO(final TodoEntity entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
-        this.success = entity.getSuccess();
+        this.done = entity.getDone();
     }
 
     public static TodoEntity toEntity(final TodoDTO todoDTO){
         TodoEntity todoEntity = TodoEntity.builder()
                 .title(todoDTO.getTitle())
                 .id(todoDTO.getId())
-                .success(todoDTO.getSuccess()).build();
+                .done(todoDTO.getDone()).build();
         return todoEntity;
     }
 

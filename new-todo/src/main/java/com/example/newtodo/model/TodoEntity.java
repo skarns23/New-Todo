@@ -25,7 +25,9 @@ public class TodoEntity {
     private String id; // 해당 Todo 오브젝트의 아이디
     private String userId; // 해당 오브젝트를 생성한 유저의 아이디
     private String title; // Todo 오브젝트의 제목 ( ex : 산책 )
-    private Boolean success; // 해당 오브젝트의 수행 여부
+
+    private Boolean done ; // 해당 오브젝트의 수행 여부
+
 
 
 }

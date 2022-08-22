@@ -58,5 +58,59 @@ public class TodoController {
            return ResponseEntity.badRequest().body(response_error);
        }
 
-       }
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> retrieveTodoList(){
+        String temp_userID = "temporary User ID";
+
+        //UserID에 맞는 튜플을 가져옴
+        List<TodoEntity> entities = todoService.retrieve(temp_userID);
+
+        //TodoEntity -> TodoDTO
+        List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+
+        ResponseDTO<TodoDTO> responseDTO = ResponseDTO.<TodoDTO>builder().data(dtos).build();
+
+        return ResponseEntity.ok().body(responseDTO);
+
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateTodo(@RequestBody TodoDTO todoDTO){
+        String temp_userID = "temporary User ID";
+
+        TodoEntity todoEntity = TodoDTO.toEntity(todoDTO);
+
+        todoEntity.setUserId(temp_userID);
+        List<TodoEntity> entities = todoService.update(todoEntity);
+
+        List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+        ResponseDTO<TodoDTO> responseDTO = ResponseDTO.<TodoDTO>builder().data(dtos).build();
+
+        return ResponseEntity.ok().body(responseDTO);
+
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteDTO(@RequestBody TodoDTO todoDTO){
+        try{
+            String temp_userID = "temporary User ID";
+            TodoEntity todoEntity = TodoDTO.toEntity(todoDTO);
+            todoEntity.setUserId(temp_userID);
+            List<TodoEntity> entities = todoService.delete(todoEntity);
+            List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
+            ResponseDTO<TodoDTO> responseDTO = ResponseDTO.<TodoDTO>builder().data(dtos).build();
+            return ResponseEntity.ok().body(responseDTO);
+
+        } catch (Exception e){
+            String error = e.getMessage();
+            ResponseDTO<TodoDTO> error_response = ResponseDTO.<TodoDTO>builder().error(error).build();
+            return ResponseEntity.badRequest().body(error_response);
+        }
+    }
+
+
+
+
 }
